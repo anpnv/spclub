@@ -1,0 +1,59 @@
+﻿<f:UserControlBase x:Class="prbd_1920_a01.MemberBalanceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
+                   xmlns:p="clr-namespace:prbd_1920_a01.Properties"
+                   FontFamily="/font/#Lato"
+             xmlns:local="clr-namespace:prbd_1920_a01"
+             mc:Ignorable="d">
+    <Grid Width="800" Height="475" Background="#2E2D3B" Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90*"/>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="120*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+            <materialDesign:PackIcon Kind="Payment" Width="25" Height="25" Foreground="#F2388F" VerticalAlignment="Center" Margin="5"/>
+            <TextBlock Text="Recharger mon solde" FontSize="23" VerticalAlignment="Center" Foreground="#F2388F"/>
+        </StackPanel>
+        <Grid Grid.Row="1" Margin="0,2,0,0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="139*"/>
+                <ColumnDefinition Width="200*" />
+                <ColumnDefinition Width="139*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Solde Actuel" Grid.Column="0" Grid.Row="0" Style="{StaticResource  FormLabel}" />
+            <TextBlock TextWrapping="Wrap" Grid.Column="1" Grid.Row="0"  Text="{Binding Solde}" Height="30" Width="100" FontSize="15" Foreground="WhiteSmoke" Margin="60,55,225,0"/>
+
+            <Label Content="Ajouter" Grid.Column="0" Grid.Row="1" Style="{StaticResource  FormLabel}" />
+
+            <f:ValidatedField Grid.Column="1" Grid.Row="1"  VerticalAlignment="Bottom">
+                <TextBox TextWrapping="Wrap"  Text="{Binding SoldeAjouter}" VerticalAlignment="Bottom"  Width="100" FontSize="15" Margin="0,0,117,0"/>
+            </f:ValidatedField>
+
+
+        </Grid>
+
+
+
+        <Grid Grid.Row="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <materialDesign:Badged Badge="{materialDesign:PackIcon Cancel}" Margin="70">
+                    <Button DockPanel.Dock="Left"  Content="Annuler" IsCancel="True" Command="{Binding Cancel}"/>
+                </materialDesign:Badged>
+                <materialDesign:Badged Badge="{materialDesign:PackIcon Payment}" Margin="70">
+                    <Button DockPanel.Dock="Left"  Content="Recharger"  IsDefault="True" Command="{Binding Save}" />
+                </materialDesign:Badged>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</f:UserControlBase>

@@ -1,0 +1,68 @@
+﻿<f:UserControlBase x:Class="prbd_1920_a01.ParticipationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
+             xmlns:p="clr-namespace:prbd_1920_a01.Properties"
+             xmlns:local="clr-namespace:prbd_1920_a01"
+             FontFamily="/font/#Lato"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             x:Name="root"
+             mc:Ignorable="d" Margin="0">
+    <Grid Width="750" Height="500">
+        <DockPanel >
+            <StackPanel DockPanel.Dock="Top" Visibility="{Binding Path=CurrentUser.IsEleve, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}"  >
+                <Grid Width="750" Height="200" Background="Transparent" >
+                    <ListView ItemsSource="{Binding Activites}" Foreground="Silver"  SelectedItem="{Binding SelectedActivite, ElementName=root}" HorizontalAlignment="Stretch"  >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path= Activite.Type}" Header="Type" Width="100"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path= Activite.NomCours}" Header="Nom" Width="100"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path= Activite.Horaire, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" Header="Date" Width="150" />
+                                <GridViewColumn DisplayMemberBinding="{Binding Path= Activite.Lieux}" Header="Adresse"  Width="200"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Top">
+                <Grid Width="750" Height="200" Background="Transparent" >
+                    <ListView ItemsSource="{Binding Competitions}" Foreground="Silver" SelectedItem="{Binding SelectedCompetition, ElementName=root}" HorizontalAlignment="Stretch"  >
+                        <ListView.View>
+                            <GridView>
+
+                                <GridViewColumn DisplayMemberBinding="{Binding Path= Competition.Nom}" Header="Nom" Width="100"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path= Competition.Salle}" Header="Salle" Width="100"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path= Competition.LotGagnant}" Header="Prix"  Width="100"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path= Competition.Horaire, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" Header="Date" Width="150" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Top" Height="15" Background="Transparent" />
+            <StackPanel DockPanel.Dock="Top"  Visibility="{Binding Path=CurrentUser.CanEdit, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}">
+                <Grid Width="750" Height="200" Background="Transparent" >
+                    <ListView ItemsSource="{Binding DonneCours}" Foreground="Silver" HorizontalAlignment="Stretch"  >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path= Type}" Header="Type" Width="100"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path= NomCours}" Header="Nom" Width="100"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path= Horaire, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" Header="Date" Width="150" />
+                                <GridViewColumn DisplayMemberBinding="{Binding Path= Lieux}" Header="Adresse"  Width="200"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </StackPanel>
+            <StackPanel Margin="0 10">
+                <materialDesign:Badged Badge="{materialDesign:PackIcon PencilOff}">
+                    <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="Retour" FontSize="18" IsCancel="True" Width="120" Command="{Binding Cancel}"/>
+                </materialDesign:Badged>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</f:UserControlBase>

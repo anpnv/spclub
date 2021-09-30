@@ -1,0 +1,33 @@
+﻿<f:UserControlBase x:Class="prbd_1920_a01.ResultCompetFiniView"
+        x:Name="root"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        FontFamily="/font/#Lato"
+        xmlns:p="clr-namespace:prbd_1920_a01.Properties"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d">
+
+    <Grid Width="750" Height="475" Background="Transparent" Margin="0">
+        <DockPanel >
+
+            <StackPanel DockPanel.Dock="Bottom" Height="15" Background="Transparent" />
+            <StackPanel DockPanel.Dock="Bottom">
+                <Grid Width="750" Height="475" Background="Transparent" >
+                    <Label Content="Résultat des compétitions passées" Margin="0,30,0,0" Foreground="#F2388F" FontSize="20" HorizontalAlignment="Center"></Label>
+                    <ListView ItemsSource="{Binding CompetitionsFini}" Foreground="Silver"  HorizontalAlignment="Stretch" Margin="0,90,0,0" >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path= Nom}" Header="Nom" Width="130"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path= TeamWinner}" Header="Team gagnante" Width="130"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path= LotGagnant}" Header="Prix"  Width="100"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</f:UserControlBase>

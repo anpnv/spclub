@@ -1,0 +1,109 @@
+﻿<f:UserControlBase x:Class="prbd_1920_a01.CompetitionsView"
+        x:Name="root"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        FontFamily="/font/#Lato"
+        xmlns:p="clr-namespace:prbd_1920_a01.Properties"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d">
+
+    <Grid Width="750" Height="550" Background="Transparent" Margin="0">
+
+        <DockPanel VerticalAlignment="Center">
+            <StackPanel DockPanel.Dock="Top">
+                <ListView ItemsSource="{Binding Competitions}" Foreground="Silver" SelectedItem="{Binding SelectedCompetitions, ElementName=root}" HorizontalAlignment="Stretch"  Height="225" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Nom}" Header="Nom" Width="120"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Salle.NomSalle}" Header="Salle" Width="120"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Horaire}" Header="Horaire" Width="160" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=LotGagnant}" Header="A Gagner"  Width="110"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=NbTeam}" Header="Nb Team"  Width="100"/>
+                            <GridViewColumn Header="" Width="100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0" Width="25" Height="25" Style="{StaticResource MaterialDesignIconButton}" 
+                                                    Command="{Binding View, ElementName=root}" CommandParameter="{Binding}" >
+                                                <materialDesign:PackIcon Kind="Eye" Width="24" Height="24" Foreground="#F2388F" VerticalAlignment="Center" />
+                                            </Button>
+                                            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0" Width="25" Height="25" Style="{StaticResource MaterialDesignIconButton}" 
+                                                    Command="{Binding Edit, ElementName=root}" CommandParameter="{Binding}" Visibility="{Binding Path=CurrentUser.CanEdit, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}">
+                                                <materialDesign:PackIcon Kind="AccountEdit" Width="24" Height="24" Foreground="#F2388F" VerticalAlignment="Center" />
+                                            </Button>
+                                            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0" Width="25" Height="25" Style="{StaticResource MaterialDesignIconButton}"  
+                                                    Command="{Binding Delete, ElementName=root}"  CommandParameter="{Binding}" Visibility="{Binding Path=CurrentUser.CanEdit, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}">
+                                                <materialDesign:PackIcon Kind="Delete"  Width="24" Height="24" Foreground="#F2388F" VerticalAlignment="Center" />
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Top" Orientation="Vertical" Visibility="{Binding ViewPressed, Converter={StaticResource BoolToVis}, UpdateSourceTrigger=PropertyChanged}">
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" DockPanel.Dock="Top">
+                    <Label  Width="150" Foreground="Silver" FontSize="17" HorizontalContentAlignment="Center" Margin="20" Content="{Binding Nom}" />
+                    <Label  Width="200" Foreground="Silver" FontSize="17" HorizontalContentAlignment="Center" Margin="20" Content="{Binding Horaire}"/>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                    <StackPanel Width="500">
+                        <ListView ItemsSource="{Binding Teams}" Foreground="Silver"  VerticalAlignment="Bottom" SelectedItem="{Binding SelectedTeam, ElementName=root}" HorizontalAlignment="Stretch" Height="225">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="120">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ToggleButton Width="20" Height="20" Style="{StaticResource MaterialDesignActionToggleButton}" IsChecked="{Binding TeamIsSelected, Mode=OneWay}"
+                                                    VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding Selected, ElementName=root}" CommandParameter="{Binding}">
+                                                    <ToggleButton.Content>
+                                                        <materialDesign:PackIcon Kind="Close" Background="#F2388F"/>
+                                                    </ToggleButton.Content>
+                                                    <materialDesign:ToggleButtonAssist.OnContent>
+                                                        <materialDesign:PackIcon Kind="Check"/>
+                                                    </materialDesign:ToggleButtonAssist.OnContent>
+                                                </ToggleButton>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Nom}" Header="Nom" Width="140"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=NbParticipant}" Header="Taille Equipe" Width="140"/>
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </StackPanel>
+                    <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Vertical" Visibility="{Binding Path=CurrentUser.CanEdit, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}">
+                        <materialDesign:Badged Badge="{materialDesign:PackIcon Kind=Add}">
+                            <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="Team" FontSize="18" IsCancel="True" Width="180" Command="{Binding AddTeam}"/>
+                        </materialDesign:Badged>
+
+                        <StackPanel Orientation="Horizontal" Margin="0 10 0 0" Visibility="{Binding AddTeamPressed, Converter={StaticResource BoolToVis}, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox materialDesign:HintAssist.Hint="Nom" Text="{Binding NomTeam}" BorderBrush="#F2388F" 
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18" Foreground="Silver" Width="180"/>
+
+                            <Button HorizontalAlignment="Center" VerticalAlignment="Center"  Width="25" Height="25" Style="{StaticResource MaterialDesignIconButton}"  
+                                                    Command="{Binding CreateTheTeam, ElementName=root}"  CommandParameter="{Binding}">
+                                <materialDesign:PackIcon Kind="Add" Width="24" Height="24" Foreground="#F2388F" VerticalAlignment="Center" />
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                
+                
+                
+                
+                
+                
+                
+             
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</f:UserControlBase>

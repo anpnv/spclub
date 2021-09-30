@@ -1,0 +1,91 @@
+@startuml CDD
+
+skinparam Shadowing false
+skinparam defaultFontName Consolas
+skinparam Linetype ortho
+
+hide methods
+   
+class Hall {
+    idHall : int
+    name : string
+    address : Address
+    hour : string
+}
+
+class Address{
+    address : string
+    zip : string
+    city : string
+}
+
+
+class Competition {
+    idCompetition : int
+    nom : String
+    match: Match
+    address : Address
+    winner : Team
+}
+
+class Match {
+    idMatch : int
+    date : Date
+    startTime : time
+    team : Team
+}
+
+class Team {
+    idTeam : int
+    idMembers : int[3]
+    numberOfParticipant : int
+    name : string
+}
+
+class Member {
+    idMember : int
+    role : Role
+    lastName : string
+    firstName : string
+    pseudo : string
+    birthDate : string
+    address : Address
+    email : string
+}
+
+enum Role{
+    Student, Teacher, Manager
+}
+
+enum Type{
+    Course, Event
+}
+
+class Inscription {
+    idReservation : int
+    idMember : int
+    date : datetime
+    numberOfParticipantMax : int
+    hall : Hall
+    price : int
+    type : Type
+}
+
+class MembershipFee {
+    duration : int
+    priceMonth : int
+}
+
+Inscription "1" -left- "1" MembershipFee : has >
+Inscription "0..*" -down- "1" Member : do <
+Inscription "1" -- "1" Hall : possesses <
+Inscription "1" -right- "1" Competition : has <
+Competition "1" *-right- "1..*" Match : contains >
+Match "1" -down- "2" Team : is composed of >
+Address "1" -- "1" Hall : has <
+Address "1" -- "1" Member : possesses <
+Address "1..*" -- "1" Competition : takes place at <
+
+
+
+@enduml

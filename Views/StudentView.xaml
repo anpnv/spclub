@@ -1,0 +1,27 @@
+﻿<f:UserControlBase x:Class="prbd_1920_a01.StudentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:prbd_1920_a01"
+             mc:Ignorable="d"  
+             FontFamily="/font/#Lato"
+             d:DesignHeight="600" d:DesignWidth="770">
+    <f:UserControlBase.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </f:UserControlBase.Resources>
+    <Grid>
+        <DockPanel LastChildFill="False" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label Content="Accueil" DockPanel.Dock="Top" HorizontalAlignment="Center" FontSize="25"/>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                <Button DockPanel.Dock="Left" Margin="20" Content="Participations" Width="150" Height="150" FontSize="18" Background="#282934" BorderThickness="0" Command="{Binding Participation}"/>
+                <Button DockPanel.Dock="Left"  Margin="20" Content="Editer Profile" Width="150" Height="150" FontSize="18" Background="#282934" BorderThickness="0" Command="{Binding EditProfile}"/>
+            </StackPanel>
+           
+        </DockPanel>
+    </Grid>
+</f:UserControlBase>
+

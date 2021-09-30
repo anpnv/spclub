@@ -1,0 +1,94 @@
+﻿<f:UserControlBase x:Class="prbd_1920_a01.ActiviteView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
+        xmlns:p="clr-namespace:prbd_1920_a01.Properties"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        x:Name="root"
+         FontFamily="/font/#Lato"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
+        mc:Ignorable="d">
+
+    <Grid Width="750" Height="550" Background="Transparent">
+        <DockPanel VerticalAlignment="Center">
+            <StackPanel DockPanel.Dock="Top">
+                <ListView ItemsSource="{Binding Activites}" Foreground="Silver"  VerticalAlignment="Top" SelectedItem="{Binding SelectedActivite, ElementName=root}" HorizontalAlignment="Stretch" Height="225">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Inscrit" Width="90">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ToggleButton Width="20" Height="20" Style="{StaticResource MaterialDesignActionToggleButton}" IsChecked="{Binding ActiviteIsSelected, Mode=OneWay}"
+                                              ToolTip="MaterialDesignActionLightToggleButton" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding Selected, ElementName=root}" CommandParameter="{Binding}">
+                                            <ToggleButton.Content>
+                                                <materialDesign:PackIcon Kind="Close" Background="#F2388F"/>
+                                            </ToggleButton.Content>
+                                            <materialDesign:ToggleButtonAssist.OnContent>
+                                                <materialDesign:PackIcon Kind="Check"/>
+                                            </materialDesign:ToggleButtonAssist.OnContent>
+                                        </ToggleButton>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Type}" Header="Type" Width="90"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=NomCours}" Header="Nom" Width="100"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Lieux.NomSalle}" Header="Lieu"  Width="100"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=NbParticipant}" Header="Places"  Width="80"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Horaire, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" Header="Date" Width="145" />
+                            <GridViewColumn Width="110" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Visibility="{Binding Path=CurrentUser.CanEdit, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}">
+                                            <Button HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,10,0" Width="25" Height="25" Style="{StaticResource MaterialDesignIconButton}" Command="{Binding View, ElementName=root}"  CommandParameter="{Binding}" >
+                                                <materialDesign:PackIcon Kind="Eye" Width="20" Height="20" Foreground="#F2388F" VerticalAlignment="Center"/>
+                                            </Button>
+                                            <Button HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,10,0" Width="25" Height="25"  Style="{StaticResource MaterialDesignIconButton}" Command="{Binding Edit, ElementName=root}" CommandParameter="{Binding}">
+                                                <materialDesign:PackIcon Kind="Edit" Width="20" Height="20" Foreground="#F2388F" VerticalAlignment="Center" />
+                                            </Button>
+                                            <Button HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,10,0" Width="25" Height="25" Style="{StaticResource MaterialDesignIconButton}" Command="{Binding Delete, ElementName=root}"  CommandParameter="{Binding}" >
+                                                <materialDesign:PackIcon Kind="Delete" Width="20" Height="20" Foreground="#F2388F" VerticalAlignment="Center"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Top" Orientation="Vertical" Visibility="{Binding ViewPressed, Converter={StaticResource BoolToVis}, UpdateSourceTrigger=PropertyChanged}">
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" DockPanel.Dock="Top">
+                    <Label  Width="150" Foreground="Silver" FontSize="17" HorizontalContentAlignment="Center" Margin="20" Content="{Binding Nom}" />
+                    <Label  Width="200" Foreground="Silver" FontSize="17" HorizontalContentAlignment="Center" Margin="20" Content="{Binding Horaire}"/>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Top">
+                    <ListView ItemsSource="{Binding Participants}" Foreground="Silver"  VerticalAlignment="Bottom" SelectedItem="{Binding selectedParticipant, ElementName=activitesView}" HorizontalAlignment="Stretch" Height="225">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="70">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" Visibility="{Binding Path=CurrentUser.CanEdit, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}">
+                                                <Button HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,10,0" Width="25" Height="25" Style="{StaticResource MaterialDesignIconButton}" Command="{Binding Kick, ElementName=root}"  CommandParameter="{Binding}" >
+                                                    <materialDesign:PackIcon Kind="Close" Width="20" Height="20" Foreground="#F2388F" VerticalAlignment="Center"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Eleve.LastName}" Header="Nom" Width="90"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Eleve.FirstName}" Header="Prénom" Width="90"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Eleve.Pseudo}" Header="Pseudo" Width="90"/>
+
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</f:UserControlBase>

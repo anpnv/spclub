@@ -1,0 +1,42 @@
+﻿<f:UserControlBase x:Class="prbd_1920_a01.EditTeamView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
+             xmlns:p="clr-namespace:prbd_1920_a01.Properties"
+                   FontFamily="/font/#Lato"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:prbd_1920_a01"
+             mc:Ignorable="d">
+    <Grid Width="450" Height="475" Background="#2E2D3B" Margin="0">
+
+        <DockPanel  Width="300" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+            <StackPanel  DockPanel.Dock="Top" VerticalAlignment="Center">
+                
+                
+
+                <TextBox Margin="0 30 0 20" materialDesign:HintAssist.Hint="Nom" Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}" BorderBrush="#F2388F"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18" Foreground="Silver"/>
+
+
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 20 0 30">
+
+                    <StackPanel Margin="20" Orientation="Horizontal">
+                        <materialDesign:Badged Badge="{materialDesign:PackIcon PencilOff}">
+                            <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="Retour" FontSize="18" IsCancel="True" Width="120" Command="{Binding Cancel}"/>
+                        </materialDesign:Badged>
+                    </StackPanel>
+
+                    <StackPanel Margin="20">
+                        <materialDesign:Badged Badge="{materialDesign:PackIcon Create}">
+                            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Content="Modifier"  IsDefault="True" FontSize="18" Width="120" Command="{Binding Save}"/>
+                        </materialDesign:Badged>
+                    </StackPanel>
+
+                </StackPanel>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</f:UserControlBase>
